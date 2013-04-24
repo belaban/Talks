@@ -69,8 +69,47 @@
         <section data-markdown>
             ## What is replication between data centers ?
         </section>
+
         <section>
             <img src="xsite.png" />
+        </section>
+
+        <section data-markdown>
+            ## What problems does it solve ?
+        </section>
+
+        <section data-markdown>
+            ## Site failure
+
+            An entire site failing ? What are the chances of that ?
+            Slim. But if it happens it can have a big (negative) impact on a company !
+        </section>
+
+        <section data-markdown>
+            ## What can cause a site failure ?
+
+            * All nodes crashing at the same time (very unlikely !)
+            * Switches/routers crashing, causing partitions
+              * If we favor CP in CAP, the site may turn read-only
+            * Clients losing access to the site due to connectivity loss
+            * Catastrophic events
+              * Floods, hurricanes (Sandy), terrorist attacks (9/11)
+                * Data centers under water (World Trade One by fire water)
+                * Sandy flooded Lower Manhattan with corrosive saltwater
+        </section>
+
+        <section data-markdown>
+            ## Follow the sun
+
+            * Not only data centers, but also client are located around the world
+              * E.g. clients in LON, BOS, SFO
+              * First the LON clients are up, then BOS, then SFO
+              * Clients want to access their local DC
+              * A LON client accessing the SFO DC has latency of ~ 200ms
+            * Requirements
+              * Clients are directed to the data center closest to them
+              * Follow the sun: only one DC is active at any time
+              * Replication between active and passive DCs
         </section>
 
     </div>
