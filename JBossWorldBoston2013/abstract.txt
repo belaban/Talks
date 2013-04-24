@@ -1,0 +1,44 @@
+
+
+Replication between data centers with JBoss Data Grid
+=====================================================
+
+Bela Ban, Lead JGroups, Red Hat
+Mircea Markus, Lead Infinispan, Red Hat
+
+
+Today's global businesses oftentimes have data centers in various
+locations around the world.
+
+The reason is the need to survive catastrophic site failures such as
+earthquakes, floods, hurricanes (Sandy), or terrorist attacks (9/11),
+and to store the data close to where it is needed.
+
+To achieve this, data is replicated not only *within* a site, but also
+*between* sites, hence the need for cross-site replication.
+
+This is a challenge because links between sites are oftentimes
+bandwidth constrained and have high latency.
+
+In this session, we'll give an overview of Infinispan's cross site
+replication functionality, which stores data redundantly across
+multiple sites.
+
+We'll briefly discuss architecture and configuration, and then focus
+on two scenarios: site failure, where we'll kill a site, and
+follow-the-sun, where we'll demonstrate a graceful failover from one
+site to another.
+
+In both cases, we'll see that clients fail over to another site while
+the data is still available.
+
+Attendees are encouraged to fire up their own clients, create some
+data and verify that their data is preserved across site failures.
+
+The take-away of this session is that attendees will understand what
+cross-site clustering is, and how to configure and run it. We will
+also discuss the plans we have for the future of xsite replication.
+
+
+
+
