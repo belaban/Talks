@@ -37,9 +37,9 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
                 <section>
-                    <h1>jbw2013</h1>
-                    <p>Template slide</p>
-                    <p>Hello world<br>
+                    <h2>Replication between data centers with JBoss Data Grid</h2>
+                    <p>Bela Ban, Red Hat</p>
+                    <p>June 2013<br>
                     </p>
                 </section>
                 <section>
@@ -76,16 +76,25 @@
                     </script>
                 </section>
                 <section data-markdown>
+                    This is code:
+
+                        public Message setFlag(short flag) {
+                            flags |= flag;
+                            return this;
+                        }
+                </section>
+                <section data-markdown>
                     <script type="text/template">
-                        This is code:
+                        Markdown code here:
 
 
-                            public Message setFlag(short flag) {
-                                flags |= flag;
-                                return this;
-                            }
 
                     </script>
+                </section>
+                <section data-markdown>
+                    ## Page title
+
+                    A paragraph with some text and a [link](http://hakim.se).
                 </section>
                 <section>
                     Hit enter:
@@ -114,7 +123,8 @@
 				center: true,
 
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+				transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+                transitionSpeed: "fast",
 
 				// Optional libraries used to extend on reveal.js
 				dependencies: [
