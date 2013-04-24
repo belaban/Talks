@@ -1,145 +1,113 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+<head>
+    <meta charset="utf-8">
 
-		<title>Replication between data centers with JBoss Data Grid</title>
+    <title>Replication between data centers with JBoss Data Grid</title>
 
-		<meta name="description" content="Presentation at JBossWorld Boston 2013">
-		<meta name="author" content="Bela Ban">
+    <meta name="description" content="Presentation at JBossWorld Boston 2013">
+    <meta name="author" content="Bela Ban">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="../../reveal.js/css/reveal.min.css">
-		<link rel="stylesheet" href="../../reveal.js/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="../../reveal.js/css/reveal.min.css">
+    <link rel="stylesheet" href="../../reveal.js/css/theme/night.css" id="theme">
 
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="../../reveal.js/lib/css/zenburn.css">
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="../../reveal.js/lib/css/zenburn.css">
 
-		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-		<script>
-			document.write( '<link rel="stylesheet" href="../../reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write( '<link rel="stylesheet" href="../../reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
 
-		<!--[if lt IE 9]>
-		<script src="../../reveal.js/lib/js/html5shiv.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../../reveal.js/lib/js/html5shiv.js"></script>
 		<![endif]-->
-	</head>
+</head>
 
-	<body>
+<body>
 
-		<div class="reveal">
+<div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-            <div class="slides">
-                <section>
-                    <h2>Replication between data centers with JBoss Data Grid</h2>
-                    <p>Bela Ban, Red Hat</p>
-                    <p>June 2013<br>
-                    </p>
-                </section>
-                <section>
-                    <h2>Architecture</h2>
-                    <p>Bullet 1</p>
-                    <p>Bullet 2</p>
-                    <blockquote>this is a quote</blockquote>
-                    <ul>
-                        <li>bullet1</li>
-                        <li>bullets</li>
-                    </ul>
-                </section>
-                <section data-markdown>
-                    <script type="text/template">
-                        ## this is the title
-                        This is markdown, let;'s see, butllets:
-                        This is *bold* and a [jgroups](http://www.jgroups.org)
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+        <section>
+            <h2>Replication between data centers with JBoss Data Grid</h2>
+            <p>Bela Ban, Red Hat</p>
+            <p>June 2013<br>
+            </p>
+        </section>
 
-                        ## Next page
-                        does it show ?
-                        ### smaller
-                        This is **bold** and this _underlined_
+        <section>
+            <h3>What is replication between data centers ?</h3>
+            <h3 class="fragment" >What problems does it solve ?</h3>
+            <h3 class="fragment">How is this done ?</h3>
+            <h3 class="fragment">How do I set this up ?</h3>
+            <h3 class="fragment">Do you have a demo that shows this in action ?</h3>
+        </section>
 
-                        some lists:
+        <section>
+            <h3>Definitions</h3>
+            <ul>
+                <li><strong>Data center (site)</strong>: a local cluster of N nodes in which data is stored redundantly
+                    on multiple nodes</li>
 
-                        1.   Candy.
-                        2.   Gum.
-                        3.   Booze.
+                <li><strong>Replication</strong>: sending changes to data to all nodes which have the data</li>
 
-                        Unordered:
+                <li><strong>xsite</strong>: cross-site (traffic), e.g. replication between DCs</li>
 
-                        - hello
-                        - world
-                    </script>
-                </section>
-                <section data-markdown>
-                    This is code:
+                <li><strong>JDG</strong>: JBoss Data Grid, a cluster in which data is stored redundantly.
+                    (Productized Infinispan).</li>
+            </ul>
+        </section>
 
-                        public Message setFlag(short flag) {
-                            flags |= flag;
-                            return this;
-                        }
-                </section>
-                <section data-markdown>
-                    <script type="text/template">
-                        Markdown code here:
+        <section data-markdown>
+            ## What is replication between data centers ?
+        </section>
+        <section>
+            <img src="xsite.png" />
+        </section>
 
+    </div>
 
+</div>
 
-                    </script>
-                </section>
-                <section data-markdown>
-                    ## Page title
+<script src="../../reveal.js/lib/js/head.min.js"></script>
+<script src="../../reveal.js/js/reveal.min.js"></script>
 
-                    A paragraph with some text and a [link](http://hakim.se).
-                </section>
-                <section>
-                    Hit enter:
-                    <p class="fragment">... to step through ...</p>
-                    <ol>
-                        <li class="fragment"><code>one</code></li>
-                        <li class="fragment"><em>two</em></li>
-                        <li class="fragment"><strong>three</strong></li>
-                    </ol>
-                </section>
-            </div>
+<script>
 
-        </div>
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+                          controls: true,
+                          progress: true,
+                          history: true,
+                          center: true,
 
-        <script src="../../reveal.js/lib/js/head.min.js"></script>
-        <script src="../../reveal.js/js/reveal.min.js"></script>
+                          theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                          transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+                          transitionSpeed: "fast",
 
-		<script>
+                          // Optional libraries used to extend on reveal.js
+                          dependencies: [
+                              { src: '../../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                              { src: '../../reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                              { src: '../../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                              { src: '../../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                              { src: '../../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                              { src: '../../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                              // { src: '../../reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                              // { src: '../../reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                          ]
+                      });
 
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+</script>
 
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
-                transitionSpeed: "fast",
-
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: '../../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '../../reveal.js/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '../../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '../../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: '../../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: '../../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-					// { src: '../../reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
-					// { src: '../../reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
-				]
-			});
-
-		</script>
-
-	</body>
+</body>
 </html>
