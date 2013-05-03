@@ -71,7 +71,7 @@
         </section>
 
         <section>
-            <img src="xsite.svg"  style="background-color: white;"/>
+            <img src="XsiteOverview.svg"  style="background-color: white;"/>
         </section>
 
         <section data-markdown>
@@ -111,21 +111,21 @@
               * Follow the sun: only one DC is active at any time
               * Replication between active and passive DCs
         </section>
-        <section>
-            <img src="drawing.svg" alt="test pic" style="background-color: #87cefa;">
-        </section>
 
         <section data-markdown>
             ## How is this done ?
         </section>
 
-        <section data-markdown>
-            ### (Architecture of xsite, sites BOS, LON and SFO)
+        <section>
+            <img src="XsiteArchitecture.svg"  style="background-color: white;"/>
         </section>
 
         <section data-markdown>
             ## Open the box
             ### (A look at a single JDG node in a site)
+        </section>
+        <section>
+            <img src="Node.svg" style="background-color: white;"/>
         </section>
 
         <section data-markdown>
@@ -149,30 +149,24 @@
                         </cache-container>
                     </subsystem>
 
-
-                <!--<subsystem xmlns="urn:infinispan:server:core:5.2" default-cache-container="clustered">
-                                        <cache-container name="clustered" default-cache="default">
-                                            <transport executor="infinispan-transport" lock-timeout="60000" cluster="LON"
-                                                       stack="relay"/>
-                                            <distributed-cache name="default" mode="SYNC" segments="20" owners="2" remote-timeout="30000"
-                                                               start="EAGER">
-                                                <locking isolation="READ_COMMITTED" acquire-timeout="30000" concurrency-level="1000" striping="false"/>
-                                                <transaction mode="NONE"/>
-                                                <backups>
-                                                    <backup site="BOS" failure-policy="WARN" enabled="true" strategy="ASYNC" timeout="5000"/>
-                                                    <backup site="SFO" failure-policy="WARN" enabled="true" strategy="ASYNC" timeout="5000"/>
-                                                </backups>
-                                            </distributed-cache>
-                                        </cache-container>
-                                    </subsystem>-->
-
             </script>
 
         </section>
 
-        <section>
-            <img src="XsiteArchitecture.svg"  style="background-color: white;"/>
+        <section data-markdown>
+            ## Xsite Roadmap
+            * State transfer between sites
+            * IRAC
         </section>
+
+        <section data-markdown>
+            ### Links
+            * __JDG__: [http://www.redhat.com/products/jbossenterprisemiddleware/data-grid](http://www.redhat.com/products/jbossenterprisemiddleware/data-grid)
+            * __Infinispan__: [http://www.infinispan.org](http://www.infinispan.org)
+            * __JGroups__: [http://www.jgroups.org](http://www.jgroups.org)
+        </section>
+
+
 
     </div>
 
