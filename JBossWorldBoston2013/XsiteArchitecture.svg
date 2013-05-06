@@ -126,24 +126,7 @@
   </g>
   <g class="com.sun.star.drawing.LineShape">
    <g>
-    <defs>
-     <mask id="mask1">
-      <g>
-       <defs>
-        <linearGradient id="gradient1" x1="9590" y1="33800" x2="9590" y2="35148" gradientUnits="userSpaceOnUse">
-         <stop offset="0.5" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="0.5" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="1" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="1" style="stop-color:rgb(128,128,128)"/>
-        </linearGradient>
-       </defs>
-       <path style="fill:url(#gradient1)" d="M 9489,33801 L 9692,33801 9692,35147 9489,35147 9489,33801 Z"/>
-      </g>
-     </mask>
-    </defs>
-    <g style="mask:url(#mask1)">
-     <path fill="none" stroke="rgb(0,0,0)" d="M 4846,18145 L 4846,17002"/>
-    </g>
+    <path fill="none" stroke="rgb(0,0,0)" d="M 4846,18145 L 4846,17002"/>
    </g>
   </g>
   <g class="Group">
@@ -215,24 +198,7 @@
   </g>
   <g class="com.sun.star.drawing.LineShape">
    <g>
-    <defs>
-     <mask id="mask2">
-      <g>
-       <defs>
-        <linearGradient id="gradient2" x1="18607" y1="36086" x2="18607" y2="36418" gradientUnits="userSpaceOnUse">
-         <stop offset="0.5" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="0.5" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="1" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="1" style="stop-color:rgb(128,128,128)"/>
-        </linearGradient>
-       </defs>
-       <path style="fill:url(#gradient2)" d="M 9235,36087 L 27980,36087 27980,36417 9235,36417 9235,36087 Z"/>
-      </g>
-     </mask>
-    </defs>
-    <g style="mask:url(#mask2)">
-     <path fill="none" stroke="rgb(0,0,0)" d="M 4719,18272 L 23261,18145"/>
-    </g>
+    <path fill="none" stroke="rgb(0,0,0)" d="M 4719,18272 L 23261,18145"/>
    </g>
   </g>
   <g class="com.sun.star.drawing.TextShape">
@@ -260,46 +226,12 @@
   </g>
   <g class="com.sun.star.drawing.LineShape">
    <g>
-    <defs>
-     <mask id="mask3">
-      <g>
-       <defs>
-        <linearGradient id="gradient3" x1="27624" y1="33802" x2="27624" y2="35150" gradientUnits="userSpaceOnUse">
-         <stop offset="0.5" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="0.5" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="1" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="1" style="stop-color:rgb(128,128,128)"/>
-        </linearGradient>
-       </defs>
-       <path style="fill:url(#gradient3)" d="M 27523,33803 L 27726,33803 27726,35149 27523,35149 27523,33803 Z"/>
-      </g>
-     </mask>
-    </defs>
-    <g style="mask:url(#mask3)">
-     <path fill="none" stroke="rgb(0,0,0)" d="M 13863,18146 L 13863,17003"/>
-    </g>
+    <path fill="none" stroke="rgb(0,0,0)" d="M 13863,18146 L 13863,17003"/>
    </g>
   </g>
   <g class="com.sun.star.drawing.LineShape">
    <g>
-    <defs>
-     <mask id="mask4">
-      <g>
-       <defs>
-        <linearGradient id="gradient4" x1="46166" y1="33804" x2="46166" y2="35152" gradientUnits="userSpaceOnUse">
-         <stop offset="0.5" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="0.5" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="1" style="stop-color:rgb(128,128,128)"/>
-         <stop offset="1" style="stop-color:rgb(128,128,128)"/>
-        </linearGradient>
-       </defs>
-       <path style="fill:url(#gradient4)" d="M 46065,33805 L 46268,33805 46268,35151 46065,35151 46065,33805 Z"/>
-      </g>
-     </mask>
-    </defs>
-    <g style="mask:url(#mask4)">
-     <path fill="none" stroke="rgb(0,0,0)" d="M 23134,18147 L 23134,17004"/>
-    </g>
+    <path fill="none" stroke="rgb(0,0,0)" d="M 23134,18147 L 23134,17004"/>
    </g>
   </g>
   <g class="Graphic">
@@ -377,67 +309,67 @@
   <g class="Group">
    <g class="com.sun.star.drawing.LineShape">
     <g>
-     <path fill="none" stroke="rgb(0,0,0)" d="M 4683,9001 L 4213,11706"/>
-     <path fill="rgb(0,0,0)" stroke="none" d="M 4175,11922 L 4364,11712 4068,11661 4175,11922 Z"/>
+     <path fill="none" stroke="rgb(0,0,0)" d="M 4683,9001 L 4223,11648"/>
+     <path fill="rgb(0,0,0)" stroke="none" d="M 4175,11922 L 4415,11655 4039,11590 4175,11922 Z"/>
     </g>
    </g>
    <g class="com.sun.star.drawing.LineShape">
     <g>
-     <path fill="none" stroke="rgb(0,0,0)" d="M 4683,9001 L 3106,13367"/>
-     <path fill="rgb(0,0,0)" stroke="none" d="M 3032,13573 L 3254,13399 2972,13297 3032,13573 Z"/>
+     <path fill="none" stroke="rgb(0,0,0)" d="M 4683,9001 L 3127,13311"/>
+     <path fill="rgb(0,0,0)" stroke="none" d="M 3032,13573 L 3314,13352 2956,13223 3032,13573 Z"/>
     </g>
    </g>
    <g class="com.sun.star.drawing.LineShape">
     <g>
-     <path fill="none" stroke="rgb(0,0,0)" d="M 4683,9002 L 6600,12116"/>
-     <path fill="rgb(0,0,0)" stroke="none" d="M 6715,12303 L 6717,12021 6462,12178 6715,12303 Z"/>
-    </g>
-   </g>
-  </g>
-  <g class="Group">
-   <g class="com.sun.star.drawing.LineShape">
-    <g>
-     <path fill="none" stroke="rgb(0,0,0)" d="M 13319,9001 L 12849,11706"/>
-     <path fill="rgb(0,0,0)" stroke="none" d="M 12811,11922 L 13000,11712 12704,11661 12811,11922 Z"/>
-    </g>
-   </g>
-   <g class="com.sun.star.drawing.LineShape">
-    <g>
-     <path fill="none" stroke="rgb(0,0,0)" d="M 13319,9001 L 11742,13367"/>
-     <path fill="rgb(0,0,0)" stroke="none" d="M 11668,13573 L 11890,13399 11608,13297 11668,13573 Z"/>
-    </g>
-   </g>
-   <g class="com.sun.star.drawing.LineShape">
-    <g>
-     <path fill="none" stroke="rgb(0,0,0)" d="M 13319,9002 L 15236,12116"/>
-     <path fill="rgb(0,0,0)" stroke="none" d="M 15351,12303 L 15353,12021 15098,12178 15351,12303 Z"/>
+     <path fill="none" stroke="rgb(0,0,0)" d="M 4683,9002 L 6569,12066"/>
+     <path fill="rgb(0,0,0)" stroke="none" d="M 6715,12303 L 6718,11944 6393,12144 6715,12303 Z"/>
     </g>
    </g>
   </g>
   <g class="Group">
    <g class="com.sun.star.drawing.LineShape">
     <g>
-     <path fill="none" stroke="rgb(0,0,0)" d="M 22590,9001 L 22120,11706"/>
-     <path fill="rgb(0,0,0)" stroke="none" d="M 22082,11922 L 22271,11712 21975,11661 22082,11922 Z"/>
+     <path fill="none" stroke="rgb(0,0,0)" d="M 13319,9001 L 12859,11648"/>
+     <path fill="rgb(0,0,0)" stroke="none" d="M 12811,11922 L 13051,11655 12675,11590 12811,11922 Z"/>
     </g>
    </g>
    <g class="com.sun.star.drawing.LineShape">
     <g>
-     <path fill="none" stroke="rgb(0,0,0)" d="M 22590,9001 L 21013,13367"/>
-     <path fill="rgb(0,0,0)" stroke="none" d="M 20939,13573 L 21161,13399 20879,13297 20939,13573 Z"/>
+     <path fill="none" stroke="rgb(0,0,0)" d="M 13319,9001 L 11763,13311"/>
+     <path fill="rgb(0,0,0)" stroke="none" d="M 11668,13573 L 11950,13352 11592,13223 11668,13573 Z"/>
     </g>
    </g>
    <g class="com.sun.star.drawing.LineShape">
     <g>
-     <path fill="none" stroke="rgb(0,0,0)" d="M 22590,9002 L 24507,12116"/>
-     <path fill="rgb(0,0,0)" stroke="none" d="M 24622,12303 L 24624,12021 24369,12178 24622,12303 Z"/>
+     <path fill="none" stroke="rgb(0,0,0)" d="M 13319,9002 L 15205,12066"/>
+     <path fill="rgb(0,0,0)" stroke="none" d="M 15351,12303 L 15354,11944 15029,12144 15351,12303 Z"/>
+    </g>
+   </g>
+  </g>
+  <g class="Group">
+   <g class="com.sun.star.drawing.LineShape">
+    <g>
+     <path fill="none" stroke="rgb(0,0,0)" d="M 22590,9001 L 22130,11648"/>
+     <path fill="rgb(0,0,0)" stroke="none" d="M 22082,11922 L 22322,11655 21946,11590 22082,11922 Z"/>
+    </g>
+   </g>
+   <g class="com.sun.star.drawing.LineShape">
+    <g>
+     <path fill="none" stroke="rgb(0,0,0)" d="M 22590,9001 L 21034,13311"/>
+     <path fill="rgb(0,0,0)" stroke="none" d="M 20939,13573 L 21221,13352 20863,13223 20939,13573 Z"/>
+    </g>
+   </g>
+   <g class="com.sun.star.drawing.LineShape">
+    <g>
+     <path fill="none" stroke="rgb(0,0,0)" d="M 22590,9002 L 24476,12066"/>
+     <path fill="rgb(0,0,0)" stroke="none" d="M 24622,12303 L 24625,11944 24300,12144 24622,12303 Z"/>
     </g>
    </g>
   </g>
   <g class="com.sun.star.drawing.LineShape">
    <g>
-    <path fill="none" stroke="rgb(0,0,0)" d="M 13446,5826 L 21617,8178"/>
-    <path fill="rgb(0,0,0)" stroke="none" d="M 21828,8239 L 21640,8029 21557,8317 21828,8239 Z"/>
+    <path fill="none" stroke="rgb(0,0,0)" d="M 13446,5826 L 21560,8162"/>
+    <path fill="rgb(0,0,0)" stroke="none" d="M 21828,8239 L 21589,7972 21483,8338 21828,8239 Z"/>
    </g>
   </g>
   <g class="com.sun.star.drawing.ConnectorShape">

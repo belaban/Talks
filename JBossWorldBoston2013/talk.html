@@ -121,8 +121,8 @@
         </section>
 
         <section data-markdown>
-            ## Open the box
-            ### (A look at a single JDG node in a site)
+            ## Drill down
+            ### A look at two JDG nodes in a site
         </section>
         <section>
             <img src="Node.svg" style="background-color: white;"/>
@@ -135,22 +135,53 @@
 
         <section data-markdown>
             <script type="text/template">
-                This is a configuration file:
+                ### Cache definition
 
-                    <subsystem xmlns="urn:infinispan:server:core:5.2" default-cache-container="clustered">
-                        <cache-container name="clustered" default-cache="default">
-                            <transport cluster="LON" stack="relay"/>
-                            <distributed-cache name="default" mode="SYNC" owners="2">
-                                    <backups>
-                                        <backup site="BOS" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
-                                        <backup site="SFO" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
-                                    </backups>
-                            </distributed-cache>
-                        </cache-container>
-                    </subsystem>
-
+                jdg/standalone/configuration/lon.xml:
+                ```
+                <subsystem xmlns="urn:infinispan:server:core:5.2" default-cache-container="clustered">
+                  <cache-container name="clustered" default-cache="default">
+                    <transport cluster="LON" stack="relay"/>
+                      <distributed-cache name="default" mode="SYNC" owners="2">
+                        <backups>
+                          <backup site="BOS" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
+                          <backup site="SFO" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
+                        </backups>
+                      </distributed-cache>
+                  </cache-container>
+                </subsystem>
+                ```
             </script>
+        </section>
 
+        <section data-markdown>
+            <script type="text/template">
+                ### Transport definition
+
+                jdg/standalone/configuration/lon.xml:
+                ```
+                <subsystem xmlns="urn:jboss:domain:jgroups:1.2" default-stack="${default.stack:udp}">
+                    <stack name="relay">
+                        <transport type="UDP" socket-binding="jgroups-udp"/>
+                        <protocol type="PING"/>
+                        <protocol type="MERGE2"/>
+                        <protocol type="FD_SOCK" socket-binding="jgroups-udp-fd"/>
+                        <protocol type="FD_ALL"/>
+                        <protocol type="pbcast.NAKACK"/>
+                        <protocol type="UNICAST2"/>
+                        <protocol type="pbcast.STABLE"/>
+                        <protocol type="pbcast.GMS"/>
+                        <protocol type="UFC"/>
+                        <protocol type="MFC"/>
+                        <protocol type="FRAG2"/>
+                        <relay site="LON">v R
+                            <remote-site name="BOS" stack="tcp" cluster="global"/>
+                            <remote-site name="SFO" stack="tcp" cluster="global"/>
+                        </relay>
+                    </stack>
+                </subsystem>
+                ```
+            </script>
         </section>
 
         <section data-markdown>
