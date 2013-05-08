@@ -227,17 +227,38 @@
         </section>
 
         <section data-markdown>
-            ### Roadmap
-            * State transfer between sites
-            * IRAC
+            ## Roadmap
+        </section>
+
+        <section data-markdown>
+            ### State transfer between sites
+
+            * When a new site is started, grab the state from another site
+            * The new site is only operational when the entire state has been transferred
+            * Pull request submitted, needs to be integrated
+        </section>
+
+        <section data-markdown>
+            ### IRAC
+            * Infinispan Reliable Asynchronous Clustering
+            * Synchronous transactional replication is not good
+              * Slow due to latency between sites
+              * Increased risk of TX rollback due to many involved nodes
+            * IRAC provides
+              * (Almost) the speed of async repl with
+              * the reliability of sync transactional replication
+              * Smaller bandwidth requirement between sites
+            * [https://community.jboss.org/wiki/RAC](https://community.jboss.org/wiki/RAC)
         </section>
 
         <section data-markdown>
             ### Links
             * __JDG__: [http://www.redhat.com/products/jbossenterprisemiddleware/data-grid](http://www.redhat.com/products/jbossenterprisemiddleware/data-grid)
+            * __JDG doc__: [https://access.redhat.com/site/documentation/JBoss_Data_Grid/](https://access.redhat.com/site/documentation/JBoss_Data_Grid/)
+            * Xsite state transfer: [https://community.jboss.org/wiki/DesignForCrossSiteReplication](https://community.jboss.org/wiki/DesignForCrossSiteReplication)
             * __Infinispan__: [http://www.infinispan.org](http://www.infinispan.org)
             * __JGroups__: [http://www.jgroups.org](http://www.jgroups.org)
-            * __Demo__: [git://github.com/belaban/jdg-client.git](git://github.com/belaban/jdg-client.git)
+            * __Demo__: [http://github.com/belaban/jdg-client.git](http://github.com/belaban/jdg-client.git)
         </section>
 
 
