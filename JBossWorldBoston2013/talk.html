@@ -174,7 +174,7 @@
                         <protocol type="UFC"/>
                         <protocol type="MFC"/>
                         <protocol type="FRAG2"/>
-                        <relay site="LON">v R
+                        <relay site="LON">
                             <remote-site name="BOS" stack="tcp" cluster="global"/>
                             <remote-site name="SFO" stack="tcp" cluster="global"/>
                         </relay>
@@ -185,7 +185,49 @@
         </section>
 
         <section data-markdown>
-            ## Xsite Roadmap
+            ### Running lon1:
+                ./lon.sh lon1 192.168.1.5 0
+
+            translates into
+
+                ./standalone.sh -c lon.xml -Dsite=LON -b 192.168.1.5 -Djboss.node.name=lon1 \
+                    -Djboss.socket.binding.port-offset=0 -u 239.1.1.1
+
+            ### Running lon2:
+                ./lon.sh lon2 192.168.1.5 500
+
+            translates into
+
+                ./standalone.sh -c lon.xml -Dsite=LON -b 192.168.1.5 -Djboss.node.name=lon2 \
+                    -Djboss.socket.binding.port-offset=500 -u 239.1.1.1
+
+            ### Running bos1:
+                ./bos.sh bos1 192.168.1.5 1000
+
+            translates into
+
+                            ./standalone.sh -c bos.xml -Dsite=BOS -b 192.168.1.5 -Djboss.node.name=bos1 \
+                                -Djboss.socket.binding.port-offset=1000 -u 239.2.2.2
+        </section>
+
+        <section data-markdown>
+            ### Demo
+
+            * Can be downloaded from [git://github.com/belaban/jdg-client.git](git://github.com/belaban/jdg-client.git).
+
+            * Provides XML configuration for sites LON, BOS and SFO
+
+            * Provides scripts to start nodes in each site
+
+            * Simply copy the config and start scripts into a JDG installation
+
+            * Includes the demo
+
+            * Can be run on the same host
+        </section>
+
+        <section data-markdown>
+            ### Roadmap
             * State transfer between sites
             * IRAC
         </section>
@@ -195,6 +237,7 @@
             * __JDG__: [http://www.redhat.com/products/jbossenterprisemiddleware/data-grid](http://www.redhat.com/products/jbossenterprisemiddleware/data-grid)
             * __Infinispan__: [http://www.infinispan.org](http://www.infinispan.org)
             * __JGroups__: [http://www.jgroups.org](http://www.jgroups.org)
+            * __Demo__: [git://github.com/belaban/jdg-client.git](git://github.com/belaban/jdg-client.git)
         </section>
 
 
