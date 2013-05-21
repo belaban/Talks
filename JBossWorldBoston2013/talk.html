@@ -139,15 +139,15 @@
 
                 jdg/standalone/configuration/lon.xml:
                 ```
-                <subsystem xmlns="urn:infinispan:server:core:5.2" default-cache-container="clustered">
-                  <cache-container name="clustered" default-cache="default">
+                <subsystem xmlns="urn:infinispan:server:core:5.2">
+                  <cache-container name="LON">
                     <transport cluster="LON" stack="relay"/>
-                      <distributed-cache name="default" mode="SYNC" owners="2">
-                        <backups>
-                          <backup site="BOS" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
-                          <backup site="SFO" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
-                        </backups>
-                      </distributed-cache>
+                    <distributed-cache name="default" mode="SYNC" owners="2">
+                      <backups>
+                        <backup site="BOS" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
+                        <backup site="SFO" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
+                      </backups>
+                    </distributed-cache>
                   </cache-container>
                 </subsystem>
                 ```
@@ -160,7 +160,7 @@
 
                 jdg/standalone/configuration/lon.xml:
                 ```
-                <subsystem xmlns="urn:jboss:domain:jgroups:1.2" default-stack="${default.stack:udp}">
+                <subsystem xmlns="urn:jboss:domain:jgroups:1.2">
                     <stack name="relay">
                         <transport type="UDP" socket-binding="jgroups-udp"/>
                         <protocol type="PING"/>
@@ -179,6 +179,22 @@
                             <remote-site name="SFO" stack="tcp" cluster="global"/>
                         </relay>
                     </stack>
+                </subsystem>
+                ```
+            </script>
+        </section>
+
+        <section data-markdown>
+            <script type="text/template">
+                ### Registering with mod-cluster
+
+                jdg/standalone/configuration/lon.xml:
+                ```
+                <subsystem xmlns="urn:jboss:domain:modcluster:1.1">
+                    <mod-cluster-config
+                        connector="ajp" proxy-list="${proxy:127.0.0.1:8000}"
+                        load-balancing-group="${site:LON-site}">
+                    </mod-cluster-config>
                 </subsystem>
                 ```
             </script>
@@ -213,7 +229,7 @@
         <section data-markdown>
             ### Demo
 
-            * Can be downloaded from [git://github.com/belaban/jdg-client.git](git://github.com/belaban/jdg-client.git).
+            * Can be downloaded from [https://github.com/belaban/jdg-client](https://github.com/belaban/jdg-client).
 
             * Provides XML configuration for sites LON, BOS and SFO
 
@@ -253,12 +269,11 @@
 
         <section data-markdown>
             ### Links
-            * __JDG__: [http://www.redhat.com/products/jbossenterprisemiddleware/data-grid](http://www.redhat.com/products/jbossenterprisemiddleware/data-grid)
-            * __JDG doc__: [https://access.redhat.com/site/documentation/JBoss_Data_Grid/](https://access.redhat.com/site/documentation/JBoss_Data_Grid/)
-            * Xsite state transfer: [https://community.jboss.org/wiki/DesignForCrossSiteReplication](https://community.jboss.org/wiki/DesignForCrossSiteReplication)
+            * __JDG__: [http://www.redhat.com/products/jbossenterprisemiddleware/data-grid/](http://www.redhat.com/products/jbossenterprisemiddleware/data-grid)
+            * __Xsite state transfer__: [https://community.jboss.org/wiki/DesignForCrossSiteReplication](https://community.jboss.org/wiki/DesignForCrossSiteReplication)
             * __Infinispan__: [http://www.infinispan.org](http://www.infinispan.org)
             * __JGroups__: [http://www.jgroups.org](http://www.jgroups.org)
-            * __Demo__: [http://github.com/belaban/jdg-client.git](http://github.com/belaban/jdg-client.git)
+            * __Demo__: [https://github.com/belaban/jdg-client](https://github.com/belaban/jdg-client)
         </section>
 
 
