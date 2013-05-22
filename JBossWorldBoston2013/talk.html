@@ -39,16 +39,16 @@
         <section>
             <h2>Replication between data centers with JBoss Data Grid</h2>
             <p>Bela Ban, Red Hat</p>
-            <p>June 2013<br>
+            <p>Red Hat Summit Boston, June 2013<br>
             </p>
         </section>
 
         <section>
-            <h3>What is replication between data centers ?</h3>
+            <h3>What is data center replication ?</h3>
             <h3 class="fragment" >What problems does it solve ?</h3>
-            <h3 class="fragment">How is this done ?</h3>
-            <h3 class="fragment">How do I set this up ?</h3>
-            <h3 class="fragment">Do you have a demo that shows this in action ?</h3>
+            <h3 class="fragment">How is it done ?</h3>
+            <h3 class="fragment">How do I set it up ?</h3>
+            <h3 class="fragment">Demo ?</h3>
         </section>
 
         <section>
@@ -57,12 +57,14 @@
                 <li><strong>Data center (site)</strong>: a local cluster of N nodes in which data is stored redundantly
                     on multiple nodes</li>
 
-                <li><strong>Replication</strong>: sending changes to data to all nodes which have the data</li>
+                <li class="fragment"><strong>Replication</strong>: sending modifications to all nodes which have the data</li>
 
-                <li><strong>xsite</strong>: cross-site (traffic), e.g. replication between DCs</li>
+                <li class="fragment"><strong>Site master</strong>: a node in the site which is responsible for relaying of modifications to other sites</li>
 
-                <li><strong>JDG</strong>: JBoss Data Grid, a cluster in which data is stored redundantly.
-                    (Productized Infinispan).</li>
+                <li class="fragment"><strong>xsite</strong>: cross-site (traffic), e.g. replication between data centers</li>
+
+                <li class="fragment"><strong>JDG</strong>: JBoss Data Grid, a cluster in which data is stored redundantly
+                    (productized Infinispan)</li>
             </ul>
         </section>
 
@@ -105,7 +107,7 @@
               * E.g. clients in LON, BOS, SFO
               * First the LON clients are up, then BOS, then SFO
               * Clients want to access their local DC
-              * A LON client accessing the SFO DC has latency of ~ 200ms
+                  * A LON client accessing the SFO DC has latency of ~30 ms
             * Requirements
               * Clients are directed to the data center closest to them
               * Follow the sun: only one DC is active at any time
@@ -113,11 +115,23 @@
         </section>
 
         <section data-markdown>
-            ## How is this done ?
+            ## How is xsite replication done ?
+            ### The whole picture
         </section>
 
         <section>
             <img src="XsiteArchitecture.svg"  style="background-color: white;"/>
+        </section>
+
+        <section>
+            <h3>Example of async xsite replication</h3>
+            <ul>
+                <li>The TX originator completes TX and forwards changes to the local site master (as one message)</li>
+
+                <li class="fragment">Site master relays message to backup site master(s)</li>
+
+                <li class="fragment">Backup site master starts local TX and applies TX</li>
+            </ul>
         </section>
 
         <section data-markdown>
@@ -201,32 +215,6 @@
         </section>
 
         <section data-markdown>
-            ### Running lon1:
-                ./lon.sh lon1 192.168.1.5 0
-
-            translates into
-
-                ./standalone.sh -c lon.xml -Dsite=LON -b 192.168.1.5 -Djboss.node.name=lon1 \
-                    -Djboss.socket.binding.port-offset=0 -u 239.1.1.1
-
-            ### Running lon2:
-                ./lon.sh lon2 192.168.1.5 500
-
-            translates into
-
-                ./standalone.sh -c lon.xml -Dsite=LON -b 192.168.1.5 -Djboss.node.name=lon2 \
-                    -Djboss.socket.binding.port-offset=500 -u 239.1.1.1
-
-            ### Running bos1:
-                ./bos.sh bos1 192.168.1.5 1000
-
-            translates into
-
-                            ./standalone.sh -c bos.xml -Dsite=BOS -b 192.168.1.5 -Djboss.node.name=bos1 \
-                                -Djboss.socket.binding.port-offset=1000 -u 239.2.2.2
-        </section>
-
-        <section data-markdown>
             ### Demo
 
             * Can be downloaded from [https://github.com/belaban/jdg-client](https://github.com/belaban/jdg-client).
@@ -237,13 +225,44 @@
 
             * Simply copy the config and start scripts into a JDG installation
 
-            * Includes the demo
-
             * Can be run on the same host
         </section>
 
         <section data-markdown>
+            ### Running lon1:
+                ./lon.sh lon1 127.0.0.1 0
+
+            translates into
+
+                ./standalone.sh -c lon.xml -Dsite=LON -b 127.0.0.1 -Djboss.node.name=lon1 \
+                    -Djboss.socket.binding.port-offset=0 -u 239.1.1.1
+
+            ### Running lon2:
+                ./lon.sh lon2 127.0.0.1 500
+
+            translates into
+
+                ./standalone.sh -c lon.xml -Dsite=LON -b 127.0.0.1 -Djboss.node.name=lon2 \
+                    -Djboss.socket.binding.port-offset=500 -u 239.1.1.1
+
+            ### Running bos1:
+                ./bos.sh bos1 127.0.0.1 1000
+
+            translates into
+
+                ./standalone.sh -c bos.xml -Dsite=BOS -b 127.0.0.1 -Djboss.node.name=bos1 \
+                    -Djboss.socket.binding.port-offset=1000 -u 239.2.2.2
+        </section>
+
+        <section data-markdown>
             ## Roadmap
+        </section>
+
+        <section data-markdown>
+            ### SiteMaster as bottleneck
+            * All update requests are handled and applied by the SiteMaster
+              * This creates a bottleneck, thread pool exhaustion
+            * ==> SiteMaster forwards update requests to random node within the same site for processing
         </section>
 
         <section data-markdown>
@@ -268,12 +287,20 @@
         </section>
 
         <section data-markdown>
+            ### Summary
+            * Xsite replication backs up a site to one or more sites
+            * Can be used to implement follow-the-sun, or as backup for site failures
+            * Easy to configure
+            * Try it out for yourself with JDG 6.1
+        </section>
+
+        <section data-markdown>
             ### Links
             * __JDG__: [http://www.redhat.com/products/jbossenterprisemiddleware/data-grid/](http://www.redhat.com/products/jbossenterprisemiddleware/data-grid)
-            * __Xsite state transfer__: [https://community.jboss.org/wiki/DesignForCrossSiteReplication](https://community.jboss.org/wiki/DesignForCrossSiteReplication)
             * __Infinispan__: [http://www.infinispan.org](http://www.infinispan.org)
             * __JGroups__: [http://www.jgroups.org](http://www.jgroups.org)
             * __Demo__: [https://github.com/belaban/jdg-client](https://github.com/belaban/jdg-client)
+            * __This talk__: [https://github.com/belaban/Talks](https://github.com/belaban/Talks)
         </section>
 
 
