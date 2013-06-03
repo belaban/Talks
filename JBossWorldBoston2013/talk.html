@@ -59,9 +59,9 @@
 
                 <li class="fragment"><strong>Replication</strong>: sending modifications to all nodes which have the data</li>
 
-                <li class="fragment"><strong>Site master</strong>: a node in the site which is responsible for relaying of modifications to other sites</li>
-
                 <li class="fragment"><strong>xsite</strong>: cross-site (traffic), e.g. replication between data centers</li>
+
+                <li class="fragment"><strong>Site master</strong>: a node in the site which is responsible for relaying of modifications to other sites</li>
 
                 <li class="fragment"><strong>JDG</strong>: JBoss Data Grid, a cluster in which data is stored redundantly
                     (productized Infinispan)</li>
@@ -158,8 +158,8 @@
                     <transport cluster="LON" stack="relay"/>
                     <distributed-cache name="default" mode="SYNC" owners="2">
                       <backups>
-                        <backup site="BOS" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
-                        <backup site="SFO" failure-policy="WARN" strategy="ASYNC" timeout="5000"/>
+                        <backup site="BOS" failure-policy="WARN" strategy="ASYNC"/>
+                        <backup site="SFO" failure-policy="WARN" strategy="ASYNC"/>
                       </backups>
                     </distributed-cache>
                   </cache-container>
@@ -262,7 +262,7 @@
             ### SiteMaster as bottleneck
             * All update requests are handled and applied by the SiteMaster
               * This creates a bottleneck, thread pool exhaustion
-            * ==> SiteMaster forwards update requests to random node within the same site for processing
+            * ==> SiteMaster forwards update requests to random nodes within the same site for processing
         </section>
 
         <section data-markdown>
@@ -282,7 +282,7 @@
             * IRAC provides
               * (Almost) the speed of async repl with
               * the reliability of sync transactional replication
-              * Smaller bandwidth requirement between sites
+              * Smaller bandwidth requirements between sites
             * [https://community.jboss.org/wiki/RAC](https://community.jboss.org/wiki/RAC)
         </section>
 
