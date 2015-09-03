@@ -1,0 +1,116 @@
+
+
+JGroups: reliable group communication in Java
+=============================================
+:author: Bela Ban belaban@yahoo.com
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:deckjs_theme: web-2.0
+:deckjs_transition: fade
+:goto:
+:menu:
+:toc:
+:status:
+
+
+About me
+--------
+* Bela Ban, Kreuzlingen (Switzerland)
+* PhD in Zurich, post-doc at Cornell where I started JGroups in 1998
+* I've been working on JGroups ever since
+* Joined JBoss in 2003 as employee 007
+* JBoss was acquired by RedHat in 2006
+* Started JBossCache (predecessor of Infinispan) in 2003, work on it until version 1.4
+* Started jgroups-raft end of 2014
+* I enjoy biking, mountain biking, tennis, running
+* I hate maven, scala, fat monolithic projects, security
+
+
+What is it?
+-----------
+* Library (a single 2MB JAR) for _reliable group communication_: one to many
+* Adds reliability to IP multicasting
+** Retransmission, deliver-once, FIFO or total ordering
+* TCP also supported as transport
+
+
+When should I use it?
+---------------------
+* When your application needs to
+** discover the nodes of a cluster automatically
+** send messages to all (or a subset of) nodes, or to single nodes
+** make sure all messages arrive in a given order
+** get notified when nodes join or leave (including crashing)
+** add or remove nodes _dynamically_
+** customize QoS for cluster communication
+
+
+
+Typical applications
+--------------------
+* Replicated or distributed state (session state in application servers)
+* Communication in a cluster
+* Chat
+* Task distribution
+* Presence
+* Pub/sub
+
+
+Other factoids
+--------------
+* Runs on Android, too
+* Largest cluster: 2'238 nodes on Google Compute Engine
+* Very stable (`currentYear()-1998` years old)
+
+
+
+Goals for JGroups
+-----------------
+* Keep JGroups small, lean & mean and don't lose focus of the scope (reliable group comm)
+* I'm happier if I can remove something than if I have to add something
+* "A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left
+   to take away" (Antoine de Saint-Exupery)
+* I like KISS
+* I'm fighting dependency orgies seen in a lot of projects today
+* JGroups has 0 (runtime) dependencies and I want to keep it that way
+
+
+
+
+JGroups has 3 parts
+-------------------
+. JChannel
+* A _cluster node endpoint_. Like a socket
+
+. Protocol stack
+* Users can add, remove, replace, enhance, or even write their own protocols
+* Ships protocols for
+** Network communication (transport)
+** Membership discovery
+** Failure detection
+** Lossless and ordered transmission
+** Network split handling and subsequent merging
+** Notification when nodes join or leave the cluster (membership)
+** Flow control
+** Fragmentation
+** Compression, encryption, authentication
+* Stack can be adapted to every environment
+
+. Building blocks
+* Used over a channel
+** Method invocation across a cluster
+** Distributed caches, counters, locks, task execution
+
+
+
+Architecture
+------------
+* Users deal mainly with the _channel_ (`JChannel`)
+* The protocol stack is setup according to an XML config file
+* A sent message passes the stack _top-down_
+* A received message is passed up through the stack _bottom-up_
+
+image::../images/arch.png[Architecture of JGroups,width="60%",align=left,valign=top]
+
+
