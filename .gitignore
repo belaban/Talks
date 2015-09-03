@@ -2,6 +2,7 @@
 *.iws
 *.ipr
 *.iml
+*.html
 .project
 .classpath
 .settings/
@@ -19,5 +20,7 @@ doc/manual/target
 doc/tutorial/target
 conf/MANIFEST.MF
 target/
+deck.js
+
 
 
