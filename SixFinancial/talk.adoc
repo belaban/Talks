@@ -40,8 +40,8 @@ When should I use it?
 * When your application needs to
 ** discover the nodes of a cluster automatically
 ** send messages to all (or a subset of) nodes, or to single nodes
-** make sure all messages arrive in a given order
-** get notified when nodes join or leave (including crashing)
+** rely on all messages arriving in a given order
+** get notified when nodes join or leave (or crash)
 ** add or remove nodes _dynamically_
 ** customize QoS for cluster communication
 
@@ -61,7 +61,7 @@ Other factoids
 --------------
 * Runs on Android, too
 * Largest cluster: 2'238 nodes on Google Compute Engine
-* Very stable (`currentYear()-1998` years old)
+* Very stable: `currentYear()-1998` years old
 
 
 
@@ -114,3 +114,45 @@ Architecture
 image::../images/arch.png[Architecture of JGroups,width="60%",align=left,valign=top]
 
 
+
+JChannel
+--------
+* Create channel
+* Connect / disconnect
+* Send / receive messages
+* Close
+
+
+
+Sample code: disseminating stock updates
+----------------------------------------
+
+[source,java]
+----
+protected static void start(String name) throws Exception {
+    JChannel ch=new JChannel("/home/bela/fast.xml").name(name);
+    ch.setReceiver(new ReceiverAdapter() {
+        public void viewAccepted(View view) {
+            System.out.printf("-- view: %s\n", view);
+        }
+        public void receive(Message msg) {
+            Update update=(Update)msg.getObject();
+            System.out.printf("%s: %.2f\n", update.name, update.val);
+        }
+
+    });
+    ch.connect("stock-ticker");
+    for(;;) {
+        String ticker=stocks[((int)Util.random(stocks.length - 1))];
+        ch.send(null, new Update(ticker, Util.random(200)));
+        Util.sleep(3000);
+    }
+}
+
+protected static class Update implements Serializable {
+    protected String name;
+    protected double val;
+
+    public Update(String name, double val) {this.name=name;this.val=val;}
+}
+----
