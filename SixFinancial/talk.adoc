@@ -27,22 +27,25 @@ About me
 * I hate maven, scala, fat monolithic projects, security
 
 
-What is it?
------------
-* Library (a single 2MB JAR) for _reliable group communication_: one to many
+What is JGroups?
+----------------
+* Library (a single 2MB JAR) for _reliable group communication_:
+** One-to-many or one-to-one communication in a cluster
+** Cluster management (join, leave, membership management)
 * Adds reliability to IP multicasting
 ** Retransmission, deliver-once, FIFO or total ordering
-* TCP also supported as transport
+** TCP also supported as transport
+
 
 
 When should I use it?
 ---------------------
 * When your application needs to
 ** discover the nodes of a cluster automatically
-** send messages to all (or a subset of) nodes, or to single nodes
+** add or remove nodes _dynamically_
+** send messages to all (or a subset of) nodes, or to single nodes _reliably_
 ** rely on all messages arriving in a given order
 ** get notified when nodes join or leave (or crash)
-** add or remove nodes _dynamically_
 ** customize QoS for cluster communication
 
 
@@ -118,14 +121,15 @@ image::../images/arch.png[Architecture of JGroups,width="60%",align=left,valign=
 JChannel
 --------
 * Create channel
-* Connect / disconnect
+* Join or leave a cluster
+* Receive view updates
 * Send / receive messages
-* Close
+* Close the channel
 
 
 
-Sample code: disseminating stock updates
-----------------------------------------
+Example 1: disseminating stock updates
+--------------------------------------
 
 [source,java]
 ----
@@ -156,3 +160,111 @@ protected static class Update implements Serializable {
     public Update(String name, double val) {this.name=name;this.val=val;}
 }
 ----
+
+
+
+Building block: RpcDispatcher
+-----------------------------
+* Building block to invoke _group methods_ (= methods in all cluster nodes)
+* Bocking or non-blocking
+* Filtering, response collection, timeouts
+* get-all, get-first, get-n
+* Handles target crashes
+
+
+
+Example 2: updating a shared cache
+----------------------------------
+
+[source,java]
+-----
+public V put(K key, V value) {
+    V prev_val=get(key);
+    try {
+        MethodCall call=new MethodCall(PUT, key, value); // calls _put()
+        disp.callRemoteMethods(null, call, call_options);
+    }
+    catch(Exception e) {
+        throw new RuntimeException("put(" + key + ", " + value + ") failed", e);
+    }
+    return prev_val;
+}
+-----
+
+[source,java]
+----
+public V _put(K key, V value) {
+    V retval=map.put(key, value);
+    return retval;
+}
+----
+
+
+Protocol stack
+--------------
+* 80+ protocols
+* Default stack has 16 protocols
+* Defined via XML (or programmatically):
+
+[source,xml]
+----
+<config>
+    <UDP mcast_port="${jgroups.udp.mcast_port:45588}" />
+    <PING />
+    <MERGE3 max_interval="30000"
+            min_interval="10000"/>
+    <FD_SOCK/>
+    <FD_ALL/>
+    <pbcast.NAKACK2 xmit_interval="500"/>
+    <UNICAST3 xmit_interval="500"/>
+    <pbcast.STABLE desired_avg_gossip="50000"
+                   max_bytes="4M"/>
+    <pbcast.GMS print_local_addr="true" join_timeout="2000"
+                view_bundling="true"/>
+    <UFC max_credits="2M" min_threshold="0.4"/>
+    <MFC max_credits="2M" min_threshold="0.4"/>
+    <FRAG2 frag_size="60K"  />
+</config>
+----
+
+
+Properties of sample stack
+--------------------------
+* UDP: transport, sends and receives messages. Performs serialization.
+* PING: initial discovery to find members
+** ~15 discovery protocols, e.g. multicasting, static list, DB, lookup server, AWS, Google CE, OpenStack, Rackspace etc
+* MERGE3: detects network partitions (split brain) and merges the subgroups back into one
+* FD_SOCK / FD_ALL: failure detection, detects crashes and asks for removal of crashed members
+* NAKACK2 / UNICAST3: reliable, lossless, exactly-once, ordered message delivery
+* GMS: group membership, handles joins / leaves / crashes, notifies members
+* UFC / MFC: flow control
+* FRAG2: fragmentation
+* More prots: encryption and authentication, compression, stats, distr locks and counters etc
+
+
+Advantages of protocol stacks
+-----------------------------
+* Custom configuration matching requirements and (network) environment
+* Remove / add protocols
+* Write custom protocols (e.g. extending existing ones)
+* Divide-and-conquer: each prot does one thing only, and does it well
+
+
+
+Demos
+-----
+
+
+
+
+Conclusion
+----------
+* JGroups is a small-footprint library to write clustered applications
+* Very simple API with 6 major methods
+* Heavily used in the Java clustering world
+
+
+
+Questions?
+----------
+* Website: http://www.jgroups.org
