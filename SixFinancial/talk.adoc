@@ -21,7 +21,7 @@ About me
 * I've been working on JGroups ever since
 * Joined JBoss in 2003 as employee 007
 * JBoss was acquired by RedHat in 2006
-* Started JBossCache (predecessor of Infinispan) in 2003, work on it until version 1.4
+* Started JBossCache (predecessor of Infinispan) in 2003, worked on it until version 1.4
 * Started jgroups-raft end of 2014
 * I enjoy biking, mountain biking, tennis, running
 * I hate maven, scala, fat monolithic projects, security
