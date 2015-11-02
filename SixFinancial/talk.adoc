@@ -166,7 +166,7 @@ protected static class Update implements Serializable {
 Building block: RpcDispatcher
 -----------------------------
 * Building block to invoke _group methods_ (= methods in all cluster nodes)
-* Bocking or non-blocking
+* Blocking or non-blocking
 * Filtering, response collection, timeouts
 * get-all, get-first, get-n
 * Handles target crashes
