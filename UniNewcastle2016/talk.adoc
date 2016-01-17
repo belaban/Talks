@@ -251,13 +251,15 @@ RAFT consensus in JGroups: jgroups-raft
 ** Amazon (Dynamo), Infinispan with EC config
 * CP: system has to be consistent at all times, but may not be available when consistency cannot be guaranteed
 ** jgroups-raft, Infinispan
-
-* JGroups-internal services might benefit, too: distributed counter and locks, sequencer (?)
+* JGroups-internal services might benefit, too: distributed counter and locks, sequencer-based total order protocol
+** These services all use a leader to acquire a lock, increment a counter or assign a global sequence number
+** In a split-brain scenario, we can have multiple leaders
+** A _merge_ would fix this, but the harm (inconsistency) is already done
 
 
 What
 ----
-* RAFT is a consensus based algorithm for replicated state machines
+* RAFT is a consensus based algorithm for replicated state machines [1]
 ** Consensus used for leader election and committing of changes
 * Fixed size cluster (e.g. of 5): `{A,B,C,D,E}`
 * _Leaders_ and _followers_; leaders are elected by majority votes (3) (and highest commit log)
@@ -293,27 +295,15 @@ How
 
 Status
 ------
-* Version 0.1 (alpha quality)
-* Includes log appending, log compaction and snapshotting
-* No dynamic view installation yet
-** Static cluster with static majority
+* Version 0.2 (alpha quality)
+* Includes log appending, log compaction and snapshotting, dynamic cluster topology changes
 * Can be used to experiment with RAFT consensus
-* OK for etcd development
 
 
 Todo list
 ---------
 * Use JGroups' failure detection and view installation to replace part of the current code (less code)
 * Full unit test coverage
-* Dynamic view installation
-
-
-
-References
-----------
-* [1] http://raftconsensus.github.io/
-* [2] https://github.com/belaban/jgroups-raft
-* [3] https://github.com/belaban/jgroups-raft/tree/master/doc
 
 
 
@@ -322,9 +312,15 @@ Conclusion
 * JGroups is a small-footprint library to write clustered applications
 * Very simple API with 6 major methods
 * Heavily used in the Java clustering world
+* jgroups-raft is relatively new project (based on the mature JGroups project) to experiment with consensus
+** See how consensus could be used in a datagrid/caching environment (Infinispan)
 
 
 
 Questions?
 ----------
-* Website: http://www.jgroups.org
+* JGroups: http://www.jgroups.org
+* Infinispan: www.infinispan.org
+* [1] RAFT: http://raftconsensus.github.io/
+* [2] jgroups-raft: https://github.com/belaban/jgroups-raft
+* [3] https://github.com/belaban/jgroups-raft/tree/master/doc
