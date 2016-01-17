@@ -17,6 +17,7 @@
     <property name="deck.js.dir"           value="${basedir}/../${deck.js}"/>
     <property name="deck.js.url"           value="git://github.com/imakewebthings/deck.js.git"/>
     <property name="SixFinancial"          value="SixFinancial"/>
+    <property name="Newcastle"             value="UniNewcastle2016"/>
 
 
     <target name="check-asciidoc-backends-exists" description="Checks if asciidoc_backends dir exists">
@@ -46,11 +47,13 @@
 
     <target name="slides" description="Generates HTML for all dirs under slides" depends="get-asciidoc-backends,get-deckjs">
         <make-slides dir="${SixFinancial}"/>
+        <make-slides dir="${Newcastle}"/>
     </target>
 
 
     <target name="clean" description="Cleans generated files">
         <cleanup dir="${SixFinancial}"/>
+        <cleanup dir="${Newcastle}"/>
         <delete>
             <fileset dir="${root.dir}" defaultexcludes="no" includes="**/*~"/>
         </delete>
