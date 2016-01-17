@@ -1,7 +1,7 @@
 
 
-JGroups: reliable group communication in Java
-=============================================
+A tale of two projects: JGroups and jgroups-raft
+================================================
 :author: Bela Ban belaban@yahoo.com
 :backend: deckjs
 :deckjs_transition: fade
@@ -65,18 +65,6 @@ Other factoids
 * Runs on Android, too
 * Largest cluster: 2'238 nodes on Google Compute Engine
 * Very stable: `currentYear()-1998` years old
-
-
-
-Goals for JGroups
------------------
-* Keep JGroups small, lean & mean and don't lose focus of the scope (reliable group comm)
-* I'm happier if I can remove something than if I have to add something
-* "A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left
-   to take away" (Antoine de Saint-Exupery)
-* I like KISS
-* I'm fighting dependency orgies seen in a lot of projects today
-* JGroups has 0 (runtime) dependencies and I want to keep it that way
 
 
 
@@ -251,9 +239,81 @@ Advantages of protocol stacks
 
 
 
-Demos
------
+Demo
+----
 
+
+RAFT consensus in JGroups: jgroups-raft
+---------------------------------------
+* Experiment with consensus in the face of network partitions
+* CAP: pick Availability or Consistency (Partitions always need to be handled)
+* AP: consistency can be _eventual_ instead of strict; temporary inconsistency is ok, system always has to be available
+** Amazon (Dynamo), Infinispan with EC config
+* CP: system has to be consistent at all times, but may not be available when consistency cannot be guaranteed
+** jgroups-raft, Infinispan
+
+* JGroups-internal services might benefit, too: distributed counter and locks, sequencer (?)
+
+
+What
+----
+* RAFT is a consensus based algorithm for replicated state machines
+** Consensus used for leader election and committing of changes
+* Fixed size cluster (e.g. of 5): `{A,B,C,D,E}`
+* _Leaders_ and _followers_; leaders are elected by majority votes (3) (and highest commit log)
+** There's always only *a single leader* in a cluster
+** All requests are handled by the leader
+** Minority partitions (e.g. 2 or less) become unavailable; client requests are rejected
+* Leader `A` receives a client request and appends it to its persistent log
+* `A` then sends a message to followers `B`, `C`, `D` and `E` which append the change to their logs
+* When A receives an ack from 2 other members (majority == 3), it _commits_ the change and applies it to its
+  attached _state machine_
+* `A` periodically sends its highest commit ID (also acting as a heartbeat) to all followers, who then commit as well
+* When the followers update their commit index, they also apply the changes to their state machines
+* Similar to `SEQUENCER` (total order), except that `SEQUENCER` can have multiple coordinators in case of network partitions
+
+
+Difference to 2PC
+-----------------
+* In 2PC, _all_ TX participants have to ack the prepare
+* In RAFT, only a majority needs to ack
+** Slow members don't slow everybody else down
+* Members which are completely out of sync, or new joiners without a log get sync'ed via snapshot installation
+** Similar to state transfer
+
+
+How
+---
+* Implementation of the RAFT consensus algorithm [1] in JGroups
+* Separate project *jgroups_raft* [2], might get merged into JGroups at some point
+* New protocols `ELECTION`, `RAFT` and `CLIENT` (client redirection to the current leader)
+* `StateMachine` interface, demo implementation `ReplicatedStateMachine` and demo `ReplicatedStateMachineDemo`
+* Persistent `Log` interface with impls based on MapDB (JDBM4) and LevelDB (default) (Ugo)
+* Demo
+
+Status
+------
+* Version 0.1 (alpha quality)
+* Includes log appending, log compaction and snapshotting
+* No dynamic view installation yet
+** Static cluster with static majority
+* Can be used to experiment with RAFT consensus
+* OK for etcd development
+
+
+Todo list
+---------
+* Use JGroups' failure detection and view installation to replace part of the current code (less code)
+* Full unit test coverage
+* Dynamic view installation
+
+
+
+References
+----------
+* [1] http://raftconsensus.github.io/
+* [2] https://github.com/belaban/jgroups-raft
+* [3] https://github.com/belaban/jgroups-raft/tree/master/doc
 
 
 
