@@ -290,8 +290,8 @@ How
 * Separate project *jgroups_raft* [2], might get merged into JGroups at some point
 * New protocols `ELECTION`, `RAFT` and `CLIENT` (client redirection to the current leader)
 * `StateMachine` interface, demo implementation `ReplicatedStateMachine` and demo `ReplicatedStateMachineDemo`
-* Persistent `Log` interface with impls based on MapDB (JDBM4) and LevelDB (default) (Ugo)
-* Demo
+* Persistent `Log` interface with impls based on LevelDB or MapDB
+
 
 Status
 ------
