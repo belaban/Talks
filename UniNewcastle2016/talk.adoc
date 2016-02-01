@@ -271,8 +271,9 @@ What is Raft?
 ** All requests are handled by the leader
 ** Minority partitions (e.g. 2 or less) become unavailable; client requests are rejected
 * Leader `A` receives a client request and appends it to its persistent log
-* `A` then sends a message to followers `B`, `C`, `D` and `E` which append the change to their logs
-* When A receives an ack from 2 other members (majority == 3), it _commits_ the change and applies it to its
+* `A` then sends a message to followers `B`, `C`, `D` and `E` which append the change to their logs and
+  send acks back to `A`
+* When `A` receives an ack from 2 other members (majority == 3), it _commits_ the change and applies it to its
   attached _state machine_
 * `A` periodically sends its highest commit ID (also acting as a heartbeat) to all followers, who then commit as well
 * When the followers update their commit index, they also apply the changes to their state machines
@@ -314,6 +315,10 @@ How
     <raft.REDIRECT/>
     <raft.CLIENT bind_addr="0.0.0.0" />
 </config>
+----
+
+
+Demo
 ----
 
 
