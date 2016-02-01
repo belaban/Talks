@@ -243,10 +243,14 @@ Demo
 ----
 
 
-RAFT consensus in JGroups: jgroups-raft
----------------------------------------
+jgroups-raft
+------------
+
+
+Why?
+----
 * Experiment with consensus in the face of network partitions
-* CAP: pick Availability or Consistency (Partitions always need to be handled)
+* CAP [3]: pick Availability or Consistency (Partitions always need to be handled)
 * AP: consistency can be _eventual_ instead of strict; temporary inconsistency is ok, system always has to be available
 ** Amazon (Dynamo), Infinispan with EC config
 * CP: system has to be consistent at all times, but may not be available when consistency cannot be guaranteed
@@ -257,9 +261,9 @@ RAFT consensus in JGroups: jgroups-raft
 ** A _merge_ would fix this, but the harm (inconsistency) is already done
 
 
-What
-----
-* RAFT is a consensus based algorithm for replicated state machines [1]
+What is Raft?
+-------------
+* Raft is a consensus based algorithm for replicated state machines [1]
 ** Consensus used for leader election and committing of changes
 * Fixed size cluster (e.g. of 5): `{A,B,C,D,E}`
 * _Leaders_ and _followers_; leaders are elected by majority votes (3) (and highest commit log)
@@ -272,13 +276,13 @@ What
   attached _state machine_
 * `A` periodically sends its highest commit ID (also acting as a heartbeat) to all followers, who then commit as well
 * When the followers update their commit index, they also apply the changes to their state machines
-* Similar to `SEQUENCER` (total order), except that `SEQUENCER` can have multiple coordinators in case of network partitions
+* Cluster additions need to be handled carefully (one at a time, via consensus)
 
 
 Difference to 2PC
 -----------------
 * In 2PC, _all_ TX participants have to ack the prepare
-* In RAFT, only a majority needs to ack
+* In Raft, only a majority needs to ack
 ** Slow members don't slow everybody else down
 * Members which are completely out of sync, or new joiners without a log get sync'ed via snapshot installation
 ** Similar to state transfer
@@ -286,24 +290,47 @@ Difference to 2PC
 
 How
 ---
-* Implementation of the RAFT consensus algorithm [1] in JGroups
-* Separate project *jgroups_raft* [2], might get merged into JGroups at some point
-* New protocols `ELECTION`, `RAFT` and `CLIENT` (client redirection to the current leader)
-* `StateMachine` interface, demo implementation `ReplicatedStateMachine` and demo `ReplicatedStateMachineDemo`
-* Persistent `Log` interface with impls based on LevelDB or MapDB
+* Implementation of the Raft consensus algorithm [1] in JGroups
+* Separate small project jgroups_raft [2] consisting of
+** New protocols `NO_DUPES`, `ELECTION`, `RAFT` and `CLIENT`
+** Building block `RaftHandle` (on top of a channel) and interface `StateMachine`
+* Config:
+
+[source.xml]
+----
+<config>
+    ...
+    <pbcast.STABLE stability_delay="1000" desired_avg_gossip="50000"
+                   max_bytes="4M"/>
+    <raft.NO_DUPES/>
+    <pbcast.GMS print_local_addr="true" join_timeout="2000"
+                view_bundling="true"/>
+    <UFC max_credits="2M"
+         min_threshold="0.4"/>
+    <MFC max_credits="2M"
+         min_threshold="0.4"/>
+    <raft.ELECTION election_min_interval="100" election_max_interval="500"/>
+    <raft.RAFT members="A,B,C" raft_id="${raft_id:undefined}" resend_interval="1000"/>
+    <raft.REDIRECT/>
+    <raft.CLIENT bind_addr="0.0.0.0" />
+</config>
+----
 
 
 Status
 ------
-* Version 0.2 (alpha quality)
-* Includes log appending, log compaction and snapshotting, dynamic cluster topology changes
-* Can be used to experiment with RAFT consensus
+* Version 0.3 (beta quality)
+* Includes log appending, log compaction and snapshotting, dynamic cluster topology changes as described in the
+  Raft thesis [1]
+* Can be used to experiment with Raft consensus
 
 
-Todo list
----------
+Things to do
+------------
 * Use JGroups' failure detection and view installation to replace part of the current code (less code)
 * Full unit test coverage
+* TLA+ model checking
+
 
 
 
@@ -313,7 +340,7 @@ Conclusion
 * Very simple API with 6 major methods
 * Heavily used in the Java clustering world
 * jgroups-raft is relatively new project (based on the mature JGroups project) to experiment with consensus
-** See how consensus could be used in a datagrid/caching environment (Infinispan)
+* See how consensus could be used in a datagrid/caching environment (Infinispan)
 
 
 
@@ -321,6 +348,6 @@ Questions?
 ----------
 * JGroups: http://www.jgroups.org
 * Infinispan: www.infinispan.org
-* [1] RAFT: http://raftconsensus.github.io/
+* [1] Raft: http://raftconsensus.github.io/
 * [2] jgroups-raft: https://github.com/belaban/jgroups-raft
-* [3] https://github.com/belaban/jgroups-raft/tree/master/doc
+* [3] CAP theorem: https://en.wikipedia.org/wiki/CAP_theorem
